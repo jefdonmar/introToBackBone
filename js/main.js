@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import moment from 'moment';
-import DatajModel from './data_model';
-import DatajCollection from './data_collection';
-import DatajTemplate from './data_template';
+import FriendModel from './friend_model';
+import FriendCollection from './friend_collection';
+import FriendTemplate from './friend_template';
 
 
 const APP_ID = 'qh4WkgaXFklvvODXdaWJfAZRYrhEfXnWQgCPol3q';
@@ -18,25 +18,25 @@ $.ajaxSetup({
 
 });
 
-let datajs = new DatajCollection();
+let friends = new FriendCollection();
 
-function renderDataj() {
+function renderFriends() {
 
   let $ul = $('<ul></ul>');
 
-  datajs.each(function(dataj) {
+  friends.each(function(friend) {
 
-    let data = dataj.JSON();
+    let data = friend.toJSON();
     console.log('data', data);
 
-    let $li = $(DatajTemplate(data));
+    let $li = $(FriendTemplate(data));
 
     $ul.append($li);
-
+    
   });
 
-  $('container').html($ul);
+  $('.container').html($ul);
 
 }
 
-dataj.fetch().then(renderDataj);
+friends.fetch().then(renderFriends);

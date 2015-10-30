@@ -11,15 +11,15 @@ var _backbone = require('backbone');
 
 var _backbone2 = _interopRequireDefault(_backbone);
 
-var _data_model = require('./data_model');
+var _friend_model = require('./friend_model');
 
-var _data_model2 = _interopRequireDefault(_data_model);
+var _friend_model2 = _interopRequireDefault(_friend_model);
 
-var DatajCollection = _backbone2['default'].Model.extend({
+var FriendCollection = _backbone2['default'].Collection.extend({
 
-  url: 'https://www.parse.com/apps/introtobackbone--2/collections',
+  url: 'https://api.parse.com/1/classes/friendList',
 
-  model: _data_model2['default'],
+  model: _friend_model2['default'],
 
   parse: function parse(data) {
     return data.results;
@@ -27,10 +27,10 @@ var DatajCollection = _backbone2['default'].Model.extend({
 
 });
 
-exports['default'] = DatajCollection;
+exports['default'] = FriendCollection;
 module.exports = exports['default'];
 
-},{"./data_model":2,"backbone":5}],2:[function(require,module,exports){
+},{"./friend_model":2,"backbone":5}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -43,15 +43,15 @@ var _backbone = require('backbone');
 
 var _backbone2 = _interopRequireDefault(_backbone);
 
-var DatajModel = _backbone2['default'].Model.extend({
+var FriendModel = _backbone2['default'].Model.extend({
 
-  urlRoot: 'https://www.parse.com/apps/introtobackbone--2/collections',
+  urlRoot: 'https://api.parse.com/1/classes/friendList',
 
   idAttribute: 'objectId'
 
 });
 
-exports['default'] = DatajModel;
+exports['default'] = FriendModel;
 module.exports = exports['default'];
 
 },{"backbone":5}],3:[function(require,module,exports){
@@ -62,11 +62,11 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-function DatajTemplate(data) {
-  return "\n\n  <ul class=\"dataj-info\">\n    <li>" + data.objectId + " |</li>\n    <li>" + data.firstName + " |</li>\n    <li>" + data.lastName + " |</li>\n    <li>" + data.age + " |</li>\n  </ul>";
+function FriendTemplate(data) {
+  return "\n\n  <ul class=\"friend-info\">\n    <li>" + data.firstName + " " + data.lastName + " |" + data.age + "|</li>\n  </ul>";
 }
 
-exports["default"] = DatajTemplate;
+exports["default"] = FriendTemplate;
 module.exports = exports["default"];
 
 },{}],4:[function(require,module,exports){
@@ -86,17 +86,17 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _data_model = require('./data_model');
+var _friend_model = require('./friend_model');
 
-var _data_model2 = _interopRequireDefault(_data_model);
+var _friend_model2 = _interopRequireDefault(_friend_model);
 
-var _data_collection = require('./data_collection');
+var _friend_collection = require('./friend_collection');
 
-var _data_collection2 = _interopRequireDefault(_data_collection);
+var _friend_collection2 = _interopRequireDefault(_friend_collection);
 
-var _data_template = require('./data_template');
+var _friend_template = require('./friend_template');
 
-var _data_template2 = _interopRequireDefault(_data_template);
+var _friend_template2 = _interopRequireDefault(_friend_template);
 
 var APP_ID = 'qh4WkgaXFklvvODXdaWJfAZRYrhEfXnWQgCPol3q';
 var API_KEY = 'RoF8zfy296MVOVIBSTW1VgSowPLMCb6X3B3enAXj';
@@ -110,28 +110,28 @@ _jquery2['default'].ajaxSetup({
 
 });
 
-var datajs = new _data_collection2['default']();
+var friends = new _friend_collection2['default']();
 
-function renderDataj() {
+function renderFriends() {
 
   var $ul = (0, _jquery2['default'])('<ul></ul>');
 
-  datajs.each(function (dataj) {
+  friends.each(function (friend) {
 
-    var data = dataj.JSON();
+    var data = friend.toJSON();
     console.log('data', data);
 
-    var $li = (0, _jquery2['default'])((0, _data_template2['default'])(data));
+    var $li = (0, _jquery2['default'])((0, _friend_template2['default'])(data));
 
     $ul.append($li);
   });
 
-  (0, _jquery2['default'])('container').html($ul);
+  (0, _jquery2['default'])('.container').html($ul);
 }
 
-dataj.fetch().then(renderDataj);
+friends.fetch().then(renderFriends);
 
-},{"./data_collection":1,"./data_model":2,"./data_template":3,"jquery":6,"moment":7,"underscore":8}],5:[function(require,module,exports){
+},{"./friend_collection":1,"./friend_model":2,"./friend_template":3,"jquery":6,"moment":7,"underscore":8}],5:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
